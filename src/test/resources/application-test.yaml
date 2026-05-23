@@ -1,0 +1,51 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:16:///issueflow_test
+    username: test
+    password: test
+    driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  sql:
+    init:
+      mode: never
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+
+issueflow:
+  jwt:
+    secret: test-secret-key-must-be-at-least-256-bits-long-for-hs256-okayyyyyyyy
+    ttl-seconds: 3600
+    issuer: issueflow-test
+  attachments:
+    dir: ${java.io.tmpdir}/issueflow-attachments-test
+    max-size-bytes: 10485760
+    allowed-mime-types:
+      - image/png
+      - image/jpeg
+      - application/pdf
+      - text/plain
+  escalation:
+    cron: "-"
+    run-on-startup: false
+  deny-list:
+    purge-cron: "-"
+
+logging:
+  level:
+    org.hibernate.SQL: warn
+    org.springframework.security: warn
+    com.zaxxer.hikari: warn

@@ -1,0 +1,7 @@
+package com.att.tdp.issueflow.auth.dto;
+
+public record LoginResponse(String accessToken, String tokenType, long expiresIn) {
+  public static LoginResponse bearer(String token, long ttlSeconds) {
+    return new LoginResponse(token, "Bearer", ttlSeconds);
+  }
+}
